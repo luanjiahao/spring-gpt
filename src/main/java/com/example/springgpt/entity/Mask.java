@@ -1,7 +1,11 @@
 package com.example.springgpt.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 public class Mask {
@@ -13,7 +17,8 @@ public class Mask {
 
     private String name;
 
-    private String hint;
+    @OneToMany(mappedBy = "mask", cascade = CascadeType.PERSIST)
+    private List<ChatMessage> context;
 
     public String getMaskId() {
         return maskId;
@@ -39,11 +44,11 @@ public class Mask {
         this.name = name;
     }
 
-    public String getHint() {
-        return hint;
+    public List<ChatMessage> getContext() {
+        return context;
     }
 
-    public void setHint(String hint) {
-        this.hint = hint;
+    public void setContext(List<ChatMessage> context) {
+        this.context = context;
     }
 }

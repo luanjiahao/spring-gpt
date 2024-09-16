@@ -1,9 +1,6 @@
 package com.example.springgpt.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -13,9 +10,16 @@ public class ChatSession {
     @Id
     private String sessionId;
 
-    private String maskId;
+    private String topic;
 
-    private String title;
+    @OneToOne
+    @JoinColumn(name = "maskId",referencedColumnName = "maskId")
+    private Mask mask;
+
+    private long createTime;
+
+    private long lastUpdate;
+
 
     @OneToMany(mappedBy = "session",cascade = CascadeType.PERSIST)
     private List<ChatMessage> messages;
@@ -28,20 +32,36 @@ public class ChatSession {
         this.sessionId = sessionId;
     }
 
-    public String getMaskId() {
-        return maskId;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setMaskId(String maskId) {
-        this.maskId = maskId;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
-    public String getTitle() {
-        return title;
+    public Mask getMask() {
+        return mask;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setMask(Mask mask) {
+        this.mask = mask;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public long getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public List<ChatMessage> getMessages() {
